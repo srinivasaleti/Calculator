@@ -10,7 +10,7 @@ class AdditionTest {
     void zeroPlusZeroIsZero() {
         Operand augend = new Operand(0);
         Operand addend = new Operand(0);
-        BinaryOperation operation = new Addition(augend,addend);
+        BinaryOperation operation = new Addition(augend, addend);
 
         assertEquals(new Operand(0), operation.evaluate());
     }
@@ -19,7 +19,7 @@ class AdditionTest {
     void onePlusTwoIsThree() {
         Operand augend = new Operand(1);
         Operand addend = new Operand(2);
-        BinaryOperation operation = new Addition(augend,addend);
+        BinaryOperation operation = new Addition(augend, addend);
 
         assertEquals(new Operand(3), operation.evaluate());
     }
