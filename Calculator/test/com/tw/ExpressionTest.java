@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 class ExpressionTest {
 
     @Test
-    void singleOperand() {
+    void expectedSingleOperandInGivenExpression() {
         String representation = "1";
         Expression expression = new Expression(representation);
         Operand[] operands = {new Operand(1)};
@@ -15,7 +15,7 @@ class ExpressionTest {
     }
 
     @Test
-    void listOfOperandsInGivenExpression() {
+    void expectedListOfOperandsInGivenExpression() {
         String representation = "1+12";
         Expression expression = new Expression(representation);
         Operand[] operands = {new Operand(1), new Operand(12)};
