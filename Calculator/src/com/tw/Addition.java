@@ -1,6 +1,6 @@
 package com.tw;
 
-//Responsible for adding to operands
+//Responsible for adding two operands
 public class Addition implements BinaryOperation {
 
     private final Operand augend;
