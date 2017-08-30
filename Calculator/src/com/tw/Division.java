@@ -4,6 +4,7 @@ package com.tw;
 public class Division implements BinaryOperation {
 
     private static final int ZERO = 0;
+    private static final String DENOMINATOR_IS_ZERO = "Denominator is zero";
 
     private final Operand nominator;
     private final Operand denominator;
@@ -16,7 +17,7 @@ public class Division implements BinaryOperation {
     @Override
     public Operand evaluate() {
         if (denominator.value() == ZERO) {
-            throw new ArithmeticException("Denominator is zero");
+            throw new ArithmeticException(DENOMINATOR_IS_ZERO);
         }
         int result = this.nominator.value() / this.denominator.value();
         return new Operand(result);
