@@ -20,18 +20,20 @@ class DivisionTest {
     void fourByOneIsEqualToFour() {
         Operand nominator = new Operand(4);
         Operand denominator = new Operand(1);
+        Operand expected = new Operand(4);
         BinaryOperation operation = new Division(nominator, denominator);
 
-        assertEquals(new Operand(4), operation.evaluate());
+        assertEquals(expected, operation.evaluate());
     }
 
     @Test
     void fourByTwoIsEqualToTwo() {
         Operand nominator = new Operand(4);
         Operand denominator = new Operand(2);
+        Operand expected = new Operand(2);
         BinaryOperation operation = new Division(nominator, denominator);
 
-        assertEquals(new Operand(2), operation.evaluate());
+        assertEquals(expected, operation.evaluate());
     }
 
 }

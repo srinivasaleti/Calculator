@@ -11,7 +11,8 @@ class CalculatorTest {
 
     @Test
     void shouldReturnZero() {
-        Expression expression = new Expression("0");
+        String representation = "0";
+        Expression expression = new Expression(representation);
         Calculator calculator = new Calculator(new BinaryOperationFactory());
 
         assertEquals(0, calculator.evaluate(expression));
@@ -19,7 +20,8 @@ class CalculatorTest {
 
     @Test
     void shouldReturnThree() {
-        Expression expression = new Expression("2-1+2*2/2");
+        String representation = "2-1+2*2/2";
+        Expression expression = new Expression(representation);
         Calculator calculator = new Calculator(new BinaryOperationFactory());
 
         assertEquals(3, calculator.evaluate(expression));
@@ -29,9 +31,11 @@ class CalculatorTest {
     void askExpressionForListOfOperandsToEvaluateIt() {
         Expression expression = mock(Expression.class);
         Calculator calculator = new Calculator(new BinaryOperationFactory());
+        Operand aOperand = new Operand(1);
+        Operator aOperator = new Operator('+');
 
-        when(expression.operandList()).thenReturn(Collections.singletonList(new Operand(1)));
-        when(expression.operatorList()).thenReturn(Collections.singletonList(new Operator('+')));
+        when(expression.operandList()).thenReturn(Collections.singletonList(aOperand));
+        when(expression.operatorList()).thenReturn(Collections.singletonList(aOperator));
         calculator.evaluate(expression);
 
         verify(expression).operandList();
@@ -41,9 +45,11 @@ class CalculatorTest {
     void askExpressionForListOfOperatorsToEvaluateIt() {
         Expression expression = mock(Expression.class);
         Calculator calculator = new Calculator(new BinaryOperationFactory());
+        Operand aOperand = new Operand(1);
+        Operator aOperator = new Operator('+');
 
-        when(expression.operandList()).thenReturn(Collections.singletonList(new Operand(1)));
-        when(expression.operatorList()).thenReturn(Collections.singletonList(new Operator('+')));
+        when(expression.operandList()).thenReturn(Collections.singletonList(aOperand));
+        when(expression.operatorList()).thenReturn(Collections.singletonList(aOperator));
         calculator.evaluate(expression);
 
         verify(expression).operatorList();

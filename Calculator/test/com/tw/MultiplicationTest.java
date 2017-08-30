@@ -10,18 +10,20 @@ class MultiplicationTest {
     void productOfZeroZeroIsZero() {
         Operand multiplier = new Operand(0);
         Operand multiplicand = new Operand(0);
+        Operand expected = new Operand(0);
         BinaryOperation operation = new Multiplication(multiplier, multiplicand);
 
-        assertEquals(new Operand(0), operation.evaluate());
+        assertEquals(expected, operation.evaluate());
     }
 
     @Test
     void productOfTwoAndThreeIsSix() {
         Operand multiplier = new Operand(2);
         Operand multiplicand = new Operand(3);
+        Operand expected = new Operand(6);
         BinaryOperation operation = new Multiplication(multiplier, multiplicand);
 
-        assertEquals(new Operand(6), operation.evaluate());
+        assertEquals(expected, operation.evaluate());
     }
 
 }
