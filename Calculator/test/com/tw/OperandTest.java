@@ -37,4 +37,20 @@ class OperandTest {
         assertEquals(operand, sameOperand);
     }
 
+    @Test
+    void expectedZero() {
+        int zero = 0;
+        Operand operand = new Operand(zero);
+
+        assertEquals(zero, operand.value());
+    }
+
+    @Test
+    void expectedOne() {
+        int one = 1;
+        Operand operand = new Operand(1);
+
+        assertEquals(one, operand.value());
+    }
+
 }

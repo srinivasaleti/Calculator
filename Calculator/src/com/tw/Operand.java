@@ -24,4 +24,8 @@ class Operand {
         return this.value == that.value;
     }
 
+    int value() {
+        return this.value;
+    }
+
 }
