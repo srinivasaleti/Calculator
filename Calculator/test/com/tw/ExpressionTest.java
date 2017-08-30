@@ -1,7 +1,9 @@
 package com.tw;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ExpressionTest {
 
@@ -11,7 +13,7 @@ class ExpressionTest {
         Expression expression = new Expression(representation);
         Operand[] operands = {new Operand(1)};
 
-        Assertions.assertArrayEquals(operands, expression.operandList().toArray());
+        assertArrayEquals(operands, expression.operandList().toArray());
     }
 
     @Test
@@ -20,7 +22,7 @@ class ExpressionTest {
         Expression expression = new Expression(representation);
         Operand[] operands = {new Operand(1), new Operand(12)};
 
-        Assertions.assertArrayEquals(operands, expression.operandList().toArray());
+        assertArrayEquals(operands, expression.operandList().toArray());
     }
 
     @Test
@@ -28,7 +30,7 @@ class ExpressionTest {
         Expression expression = new Expression("1+2");
         Operator[] operators = {new Operator('+')};
 
-        Assertions.assertArrayEquals(operators, expression.operatorList().toArray());
+        assertArrayEquals(operators, expression.operatorList().toArray());
     }
 
     @Test
@@ -36,7 +38,7 @@ class ExpressionTest {
         Expression expression = new Expression("1+2-3");
         Operator[] operators = {new Operator('+'), new Operator('-')};
 
-        Assertions.assertArrayEquals(operators, expression.operatorList().toArray());
+        assertArrayEquals(operators, expression.operatorList().toArray());
     }
 
 }
