@@ -3,6 +3,8 @@ package com.tw;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 class CalculatorTest {
 
@@ -20,6 +22,26 @@ class CalculatorTest {
         Calculator calculator = new Calculator(expression);
 
         assertEquals(3, calculator.evaluate());
+    }
+
+    @Test
+    void askExpressionForListOfOperandsToEvaluateIt() {
+        Expression expression = mock(Expression.class);
+        Calculator calculator = new Calculator(expression);
+
+        calculator.evaluate();
+
+        verify(expression).operandList();
+    }
+
+    @Test
+    void askExpressionForListOfOperatorsToEvaluateIt() {
+        Expression expression = mock(Expression.class);
+        Calculator calculator = new Calculator(expression);
+
+        calculator.evaluate();
+
+        verify(expression).operatorList();
     }
 
 }
