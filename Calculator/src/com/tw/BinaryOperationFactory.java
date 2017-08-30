@@ -7,6 +7,7 @@ class BinaryOperationFactory {
     private static final char MINUS = '-';
     private static final char PRODUCT = '*';
     private static final char DIVISION = '/';
+    private static final String INVALID_OPERATION = "Invalid Operation";
 
     BinaryOperation getOperation(Operator operator, Operand firstOperand, Operand secondOperand) {
         if (operator.equals(new Operator(PLUS))) {
@@ -21,7 +22,7 @@ class BinaryOperationFactory {
         if (operator.equals(new Operator(DIVISION))) {
             return new Division(firstOperand, secondOperand);
         }
-        throw new InvalidOperationException("Invalid Operation");
+        throw new InvalidOperationException(INVALID_OPERATION);
     }
 
 }
