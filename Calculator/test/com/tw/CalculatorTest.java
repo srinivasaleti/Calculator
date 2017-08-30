@@ -14,4 +14,12 @@ class CalculatorTest {
         assertEquals(0, calculator.evaluate());
     }
 
+    @Test
+    void shouldReturnThree() {
+        Expression expression = new Expression("1+2");
+        Calculator calculator = new Calculator(expression);
+
+        assertEquals(3, calculator.evaluate());
+    }
+
 }
