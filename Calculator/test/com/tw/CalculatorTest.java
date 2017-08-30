@@ -12,7 +12,7 @@ class CalculatorTest {
     @Test
     void shouldReturnZero() {
         Expression expression = new Expression("0");
-        Calculator calculator = new Calculator(expression);
+        Calculator calculator = new Calculator(expression, new BinaryOperationFactory());
 
         assertEquals(0, calculator.evaluate());
     }
@@ -20,7 +20,7 @@ class CalculatorTest {
     @Test
     void shouldReturnThree() {
         Expression expression = new Expression("2-1+2*2/2");
-        Calculator calculator = new Calculator(expression);
+        Calculator calculator = new Calculator(expression, new BinaryOperationFactory());
 
         assertEquals(3, calculator.evaluate());
     }
@@ -28,7 +28,7 @@ class CalculatorTest {
     @Test
     void askExpressionForListOfOperandsToEvaluateIt() {
         Expression expression = mock(Expression.class);
-        Calculator calculator = new Calculator(expression);
+        Calculator calculator = new Calculator(expression, new BinaryOperationFactory());
 
         when(expression.operandList()).thenReturn(Collections.singletonList(new Operand(1)));
         when(expression.operatorList()).thenReturn(Collections.singletonList(new Operator('+')));
@@ -40,7 +40,7 @@ class CalculatorTest {
     @Test
     void askExpressionForListOfOperatorsToEvaluateIt() {
         Expression expression = mock(Expression.class);
-        Calculator calculator = new Calculator(expression);
+        Calculator calculator = new Calculator(expression, new BinaryOperationFactory());
 
         when(expression.operandList()).thenReturn(Collections.singletonList(new Operand(1)));
         when(expression.operatorList()).thenReturn(Collections.singletonList(new Operator('+')));

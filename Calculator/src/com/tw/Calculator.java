@@ -7,9 +7,11 @@ import java.util.List;
 class Calculator {
 
     private final Expression expression;
+    private final BinaryOperationFactory binaryOperationFactory;
 
-    Calculator(Expression expression) {
+    Calculator(Expression expression, BinaryOperationFactory binaryOperationFactory) {
         this.expression = expression;
+        this.binaryOperationFactory=binaryOperationFactory;
     }
 
     int evaluate() {
@@ -21,19 +23,8 @@ class Calculator {
     private int evaluateBasedOn(Iterator<Operand> operands, Iterator<Operator> operators) {
         Operand resultOperand = operands.next();
         while (operands.hasNext() && operators.hasNext()) {
-            Operator operator = operators.next();
-            if (operator.symbol() == '+') {
-                resultOperand = new Operand(resultOperand.value() + operands.next().value());
-            }
-            if (operator.symbol() == '-') {
-                resultOperand = new Operand(resultOperand.value() - operands.next().value());
-            }
-            if (operator.symbol() == '*') {
-                resultOperand = new Operand(resultOperand.value() * operands.next().value());
-            }
-            if (operator.symbol() == '/') {
-                resultOperand = new Operand(resultOperand.value() / operands.next().value());
-            }
+            BinaryOperation operation = binaryOperationFactory.getOperation(operators.next(),resultOperand,operands.next());
+            resultOperand = operation.evaluate();
         }
         return resultOperand.value();
     }
