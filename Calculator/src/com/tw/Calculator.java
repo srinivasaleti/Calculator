@@ -6,17 +6,15 @@ import java.util.List;
 //Represents a tool for mathematical calculations
 class Calculator {
 
-    private final Expression expression;
     private final BinaryOperationFactory binaryOperationFactory;
 
-    Calculator(Expression expression, BinaryOperationFactory binaryOperationFactory) {
-        this.expression = expression;
+    Calculator(BinaryOperationFactory binaryOperationFactory) {
         this.binaryOperationFactory = binaryOperationFactory;
     }
 
-    int evaluate() {
-        List<Operand> operands = this.expression.operandList();
-        List<Operator> operators = this.expression.operatorList();
+    int evaluate(Expression expression) {
+        List<Operand> operands = expression.operandList();
+        List<Operator> operators = expression.operatorList();
         return evaluateBasedOn(operands.iterator(), operators.iterator());
     }
 

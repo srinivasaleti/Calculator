@@ -12,27 +12,27 @@ class CalculatorTest {
     @Test
     void shouldReturnZero() {
         Expression expression = new Expression("0");
-        Calculator calculator = new Calculator(expression, new BinaryOperationFactory());
+        Calculator calculator = new Calculator(new BinaryOperationFactory());
 
-        assertEquals(0, calculator.evaluate());
+        assertEquals(0, calculator.evaluate(expression));
     }
 
     @Test
     void shouldReturnThree() {
         Expression expression = new Expression("2-1+2*2/2");
-        Calculator calculator = new Calculator(expression, new BinaryOperationFactory());
+        Calculator calculator = new Calculator(new BinaryOperationFactory());
 
-        assertEquals(3, calculator.evaluate());
+        assertEquals(3, calculator.evaluate(expression));
     }
 
     @Test
     void askExpressionForListOfOperandsToEvaluateIt() {
         Expression expression = mock(Expression.class);
-        Calculator calculator = new Calculator(expression, new BinaryOperationFactory());
+        Calculator calculator = new Calculator(new BinaryOperationFactory());
 
         when(expression.operandList()).thenReturn(Collections.singletonList(new Operand(1)));
         when(expression.operatorList()).thenReturn(Collections.singletonList(new Operator('+')));
-        calculator.evaluate();
+        calculator.evaluate(expression);
 
         verify(expression).operandList();
     }
@@ -40,11 +40,11 @@ class CalculatorTest {
     @Test
     void askExpressionForListOfOperatorsToEvaluateIt() {
         Expression expression = mock(Expression.class);
-        Calculator calculator = new Calculator(expression, new BinaryOperationFactory());
+        Calculator calculator = new Calculator(new BinaryOperationFactory());
 
         when(expression.operandList()).thenReturn(Collections.singletonList(new Operand(1)));
         when(expression.operatorList()).thenReturn(Collections.singletonList(new Operator('+')));
-        calculator.evaluate();
+        calculator.evaluate(expression);
 
         verify(expression).operatorList();
     }
