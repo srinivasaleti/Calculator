@@ -15,8 +15,8 @@ public class Division implements BinaryOperation {
 
     @Override
     public Operand evaluate() {
-        if (denominator.value()== ZERO){
-            throw  new ArithmeticException("Denominator is zero");
+        if (denominator.value() == ZERO) {
+            throw new ArithmeticException("Denominator is zero");
         }
         int result = this.nominator.value() / this.denominator.value();
         return new Operand(result);

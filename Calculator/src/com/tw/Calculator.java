@@ -11,7 +11,7 @@ class Calculator {
 
     Calculator(Expression expression, BinaryOperationFactory binaryOperationFactory) {
         this.expression = expression;
-        this.binaryOperationFactory=binaryOperationFactory;
+        this.binaryOperationFactory = binaryOperationFactory;
     }
 
     int evaluate() {
@@ -23,7 +23,7 @@ class Calculator {
     private int evaluateBasedOn(Iterator<Operand> operands, Iterator<Operator> operators) {
         Operand resultOperand = operands.next();
         while (operands.hasNext() && operators.hasNext()) {
-            BinaryOperation operation = binaryOperationFactory.getOperation(operators.next(),resultOperand,operands.next());
+            BinaryOperation operation = binaryOperationFactory.getOperation(operators.next(), resultOperand, operands.next());
             resultOperand = operation.evaluate();
         }
         return resultOperand.value();
