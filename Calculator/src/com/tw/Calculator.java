@@ -19,7 +19,23 @@ class Calculator {
     }
 
     private int evaluateBasedOn(Iterator<Operand> operands, Iterator<Operator> operators) {
-        return 0;
+        Operand resultOperand = operands.next();
+        while (operands.hasNext() && operators.hasNext()) {
+            Operator operator = operators.next();
+            if (operator.symbol() == '+') {
+                resultOperand = new Operand(resultOperand.value() + operands.next().value());
+            }
+            if (operator.symbol() == '-') {
+                resultOperand = new Operand(resultOperand.value() - operands.next().value());
+            }
+            if (operator.symbol() == '*') {
+                resultOperand = new Operand(resultOperand.value() * operands.next().value());
+            }
+            if (operator.symbol() == '/') {
+                resultOperand = new Operand(resultOperand.value() / operands.next().value());
+            }
+        }
+        return resultOperand.value();
     }
 
 }

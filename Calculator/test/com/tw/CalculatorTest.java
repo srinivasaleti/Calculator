@@ -2,9 +2,10 @@ package com.tw;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 class CalculatorTest {
 
@@ -18,7 +19,7 @@ class CalculatorTest {
 
     @Test
     void shouldReturnThree() {
-        Expression expression = new Expression("1+2");
+        Expression expression = new Expression("2-1+2*2/2");
         Calculator calculator = new Calculator(expression);
 
         assertEquals(3, calculator.evaluate());
@@ -29,6 +30,8 @@ class CalculatorTest {
         Expression expression = mock(Expression.class);
         Calculator calculator = new Calculator(expression);
 
+        when(expression.operandList()).thenReturn(Collections.singletonList(new Operand(1)));
+        when(expression.operatorList()).thenReturn(Collections.singletonList(new Operator('+')));
         calculator.evaluate();
 
         verify(expression).operandList();
@@ -39,6 +42,8 @@ class CalculatorTest {
         Expression expression = mock(Expression.class);
         Calculator calculator = new Calculator(expression);
 
+        when(expression.operandList()).thenReturn(Collections.singletonList(new Operand(1)));
+        when(expression.operatorList()).thenReturn(Collections.singletonList(new Operator('+')));
         calculator.evaluate();
 
         verify(expression).operatorList();
