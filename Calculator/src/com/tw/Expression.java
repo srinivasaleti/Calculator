@@ -1,7 +1,5 @@
 package com.tw;
 
-import sun.tools.jstat.Operator;
-
 import java.util.List;
 
 //Represents an arithmetic expression
