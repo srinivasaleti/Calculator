@@ -41,7 +41,13 @@ class Expression {
     }
 
     List<Operator> operatorList() {
-        return null;
+        List<Operator> operatorsList = new ArrayList<>();
+        for (Character character : representation.toCharArray()) {
+            if (operatorSet.contains(character)) {
+                operatorsList.add(new Operator(character));
+            }
+        }
+        return operatorsList;
     }
 
 }
