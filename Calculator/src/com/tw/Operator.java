@@ -23,4 +23,8 @@ class Operator {
         return this.symbol == that.symbol;
     }
 
+    char symbol() {
+        return this.symbol;
+    }
+
 }

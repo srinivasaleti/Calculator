@@ -42,4 +42,20 @@ class OperatorTest {
         assertEquals(operator, sameOperator);
     }
 
+    @Test
+    void expectedPlusSymbol() {
+        char plus = '+';
+        Operator operator = new Operator(plus);
+
+        assertEquals(plus, operator.symbol());
+    }
+
+    @Test
+    void expectedMinusSymbol() {
+        char minus = '-';
+        Operator operator = new Operator(minus);
+
+        assertEquals(minus, operator.symbol());
+    }
+
 }
