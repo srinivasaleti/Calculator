@@ -33,13 +33,6 @@ class Expression {
         return operandsList;
     }
 
-    private int numberAfterAddingGivenDigitToPreviousNumber(int previousNumber, Character digit) {
-        int power = 10;
-        int powerTimesOfNumber = previousNumber * power;
-        int valueOfDigit = Integer.parseInt(digit.toString());
-        return powerTimesOfNumber + valueOfDigit;
-    }
-
     List<Operator> operatorList() {
         List<Operator> operatorsList = new ArrayList<>();
         for (Character character : representation.toCharArray()) {
@@ -48,6 +41,13 @@ class Expression {
             }
         }
         return operatorsList;
+    }
+
+    private int numberAfterAddingGivenDigitToPreviousNumber(int previousNumber, Character digit) {
+        int power = 10;
+        int powerTimesOfNumber = previousNumber * power;
+        int valueOfDigit = Integer.parseInt(digit.toString());
+        return powerTimesOfNumber + valueOfDigit;
     }
 
 }
