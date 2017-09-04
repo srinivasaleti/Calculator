@@ -55,4 +55,39 @@ class CalculatorTest {
         verify(expression).operatorList();
     }
 
+    @Test
+    void askBinaryFactoryToGetOperation() {
+        String representation = "2+3*4";
+        Expression expression = new Expression(representation);
+        BinaryOperationFactory binaryOperationFactory = mock(BinaryOperationFactory.class);
+        Calculator calculator = new Calculator(binaryOperationFactory);
+        Multiplication multiplication = mock(Multiplication.class);
+        BinaryOperation addOperation = mock(Addition.class);
+
+        when(binaryOperationFactory.getOperation(any(Operator.class), any(Operand.class), any(Operand.class)))
+                .thenReturn(multiplication);
+        when(addOperation.evaluate()).thenReturn(new Operand(14));
+        when(multiplication.evaluate()).thenReturn(new Operand(12));
+        calculator.evaluate(expression);
+
+        verify(binaryOperationFactory).getOperation(new Operator('*'), new Operand(3), new Operand(4));
+        verify(binaryOperationFactory).getOperation(new Operator('+'), new Operand(2), new Operand(12));
+    }
+
+    @Test
+    void executeOperationGotFromBinaryFactory() {
+        String representation = "2+4*3";
+        Expression expression = new Expression(representation);
+        BinaryOperationFactory binaryOperationFactory = mock(BinaryOperationFactory.class);
+        Calculator calculator = new Calculator(binaryOperationFactory);
+        BinaryOperation addOperation = mock(Addition.class);
+
+        when(binaryOperationFactory.getOperation(any(Operator.class), any(Operand.class), any(Operand.class)))
+                .thenReturn(addOperation, addOperation);
+        when(addOperation.evaluate()).thenReturn(new Operand(1));
+        calculator.evaluate(expression);
+
+        verify(addOperation, times(2)).evaluate();
+    }
+
 }
