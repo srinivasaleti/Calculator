@@ -30,19 +30,38 @@ class Calculator {
         if (!operands.hasNext()) {
             return 0;
         }
+        evaluateUsingStacksBasedOn(operands, operators);
+        return operandStack.peek().value();
+    }
+
+    private void evaluateUsingStacksBasedOn(Iterator<Operand> operands, Iterator<Operator> operators) {
         operandStack.push(operands.next());
         while (operands.hasNext()) {
             Operator currentOperator = operators.next();
-            while (isStackOperatorHasHigherPrecedenceThanCurrentOperator(currentOperator)) {
-                doArithmeticOperation();
-            }
+            doOperationByComparingStackOperatorWithCurrentOperator(currentOperator);
             operandStack.push(operands.next());
             operatorStack.push(currentOperator);
         }
+        doArithmeticOperationsAsLongAsOperatorsAreInOperatorStack();
+    }
+
+    private void doOperationByComparingStackOperatorWithCurrentOperator(Operator currentOperator) {
+        while (isStackOperatorHasHigherPrecedenceThanCurrentOperator(currentOperator)) {
+            doArithmeticOperation();
+        }
+    }
+
+    private void doArithmeticOperationsAsLongAsOperatorsAreInOperatorStack() {
         while (!operatorStack.empty()) {
             doArithmeticOperation();
         }
-        return operandStack.peek().value();
+    }
+
+    private void doArithmeticOperation() {
+        Operand firstOperand = operandStack.pop();
+        Operand secondOperand = operandStack.pop();
+        BinaryOperation operation = binaryOperationFactory.getOperation(operatorStack.pop(), secondOperand, firstOperand);
+        operandStack.push(operation.evaluate());
     }
 
     private boolean isStackOperatorHasHigherPrecedenceThanCurrentOperator(Operator currentOperator) {
@@ -53,13 +72,6 @@ class Calculator {
         Precedence stackTopOperatorPrecedence = this.operatorPrecedenceFactory.getPrecedence(stackTopOperator);
         Precedence currentOperatorPrecedence = this.operatorPrecedenceFactory.getPrecedence(currentOperator);
         return stackTopOperatorPrecedence.hasHigherThan(currentOperatorPrecedence);
-    }
-
-    private void doArithmeticOperation() {
-        Operand firstOperand = operandStack.pop();
-        Operand secondOperand = operandStack.pop();
-        BinaryOperation operation = binaryOperationFactory.getOperation(operatorStack.pop(), secondOperand, firstOperand);
-        operandStack.push(operation.evaluate());
     }
 
 }
