@@ -33,19 +33,19 @@ class Calculator {
         operandStack.push(operands.next());
         while (operands.hasNext()) {
             Operator currentOperator = operators.next();
-            while (canPerformOperation(operatorStack, currentOperator)) {
-                doArithmeticOperation(operandStack, operatorStack);
+            while (canPerformOperation(currentOperator)) {
+                doArithmeticOperation();
             }
             operandStack.push(operands.next());
             operatorStack.push(currentOperator);
         }
         while (!operatorStack.empty()) {
-            doArithmeticOperation(operandStack, operatorStack);
+            doArithmeticOperation();
         }
         return operandStack.peek().value();
     }
 
-    private boolean canPerformOperation(Stack<Operator> operatorStack, Operator currentOperator) {
+    private boolean canPerformOperation(Operator currentOperator) {
         if (operatorStack.empty()) {
             return false;
         }
@@ -55,7 +55,7 @@ class Calculator {
         return stackTopOperatorPrecedence.hasHigherThan(currentOperatorPrecedence);
     }
 
-    private void doArithmeticOperation(Stack<Operand> operandStack, Stack<Operator> operatorStack) {
+    private void doArithmeticOperation() {
         Operand firstOperand = operandStack.pop();
         Operand secondOperand = operandStack.pop();
         BinaryOperation operation = binaryOperationFactory.getOperation(operatorStack.pop(), secondOperand, firstOperand);
