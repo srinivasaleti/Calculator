@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ExpressionTest {
 
@@ -43,17 +42,31 @@ class ExpressionTest {
     }
 
     @Test
-    void expectedLeftExpressionRepresentationUntilInnerParentheses(){
+    void expectedLeftExpressionRepresentationUntilInnerParentheses() {
         Expression expression = new Expression("1+(3+4)+6");
 
-        assertEquals("1+",expression.leftSubExpressionUntilInnerParentheses());
+        assertEquals("1+", expression.leftSubExpressionUntilInnerParentheses());
     }
 
     @Test
     void expectedLeftExpressionRepresentationUntilInnerParenthesesOfAnotherExpression() {
         Expression expression = new Expression("1+(2+(3+4)+5)+6");
 
-        assertEquals("1+(2+",expression.leftSubExpressionUntilInnerParentheses());
+        assertEquals("1+(2+", expression.leftSubExpressionUntilInnerParentheses());
+    }
+
+    @Test
+    void expectedRightSideExpressionRepresentationFromInnerMostRightParentheses() {
+        Expression expression = new Expression("1+(3+4)+6");
+
+        assertEquals("+6", expression.rightSubExpressionRepresentationFromInnerRightParentheses());
+    }
+
+    @Test
+    void expectedRightSideExpressionRepresentationFromInnerMostRightParenthesesOfAnotherExpression() {
+        Expression expression = new Expression("1+(2+(3+4)+5)+6");
+
+        assertEquals("+5)+6", expression.rightSubExpressionRepresentationFromInnerRightParentheses());
     }
 
 }

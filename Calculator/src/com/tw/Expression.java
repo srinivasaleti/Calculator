@@ -6,6 +6,7 @@ import java.util.*;
 class Expression {
 
     private static final char OPEN_PARENTHESIS = '(';
+    private static final char CLOSED_PARENTHESES = ')';
     private static final char PLUS = '+';
     private static final char MINUS = '-';
     private static final char PRODUCT = '*';
@@ -54,8 +55,11 @@ class Expression {
     }
 
     String leftSubExpressionUntilInnerParentheses() {
-        int innerMostParenthesesIndex = innerOpenParenthesesIndex();
-        return this.representation.substring(INITIAL_INDEX, innerMostParenthesesIndex);
+        return this.representation.substring(INITIAL_INDEX, innerOpenParenthesesIndex());
+    }
+
+    String rightSubExpressionRepresentationFromInnerRightParentheses() {
+        return this.representation.substring(innerMostClosedParenthesesIndex() + OFFSET);
     }
 
     private int innerOpenParenthesesIndex() {
@@ -68,6 +72,17 @@ class Expression {
             index += OFFSET;
         }
         return innerMostParenthesesIndex;
+    }
+
+    private int innerMostClosedParenthesesIndex() {
+        int index = INITIAL_INDEX;
+        while (index < this.representation.length()) {
+            if (this.representation.charAt(index) == CLOSED_PARENTHESES) {
+                return index;
+            }
+            index += OFFSET;
+        }
+        return INITIAL_INDEX;
     }
 
 }
