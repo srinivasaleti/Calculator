@@ -13,16 +13,16 @@ class CalculatorTest {
     void shouldReturnZero() {
         String representation = "0";
         Expression expression = new Expression(representation);
-        Calculator calculator = new Calculator(new BinaryOperationFactory());
+        Calculator calculator = new Calculator(new BinaryOperationFactory(), new OperatorPrecedenceFactory());
 
         assertEquals(0, calculator.evaluate(expression));
     }
 
     @Test
     void shouldReturnThree() {
-        String representation = "2-1+2*2/2";
+        String representation = "2*1+1";
         Expression expression = new Expression(representation);
-        Calculator calculator = new Calculator(new BinaryOperationFactory());
+        Calculator calculator = new Calculator(new BinaryOperationFactory(), new OperatorPrecedenceFactory());
 
         assertEquals(3, calculator.evaluate(expression));
     }
@@ -30,7 +30,7 @@ class CalculatorTest {
     @Test
     void askExpressionForListOfOperandsToEvaluateIt() {
         Expression expression = mock(Expression.class);
-        Calculator calculator = new Calculator(new BinaryOperationFactory());
+        Calculator calculator = new Calculator(new BinaryOperationFactory(), new OperatorPrecedenceFactory());
         Operand aOperand = new Operand(1);
         Operator aOperator = new Operator('+');
 
@@ -44,9 +44,10 @@ class CalculatorTest {
     @Test
     void askExpressionForListOfOperatorsToEvaluateIt() {
         Expression expression = mock(Expression.class);
-        Calculator calculator = new Calculator(new BinaryOperationFactory());
+        Calculator calculator = new Calculator(new BinaryOperationFactory(), new OperatorPrecedenceFactory());
         Operand aOperand = new Operand(1);
-        Operator aOperator = new Operator('+');
+        char PLUS = '+';
+        Operator aOperator = new Operator(PLUS);
 
         when(expression.operandList()).thenReturn(Collections.singletonList(aOperand));
         when(expression.operatorList()).thenReturn(Collections.singletonList(aOperator));
@@ -58,9 +59,11 @@ class CalculatorTest {
     @Test
     void askBinaryFactoryToGetOperation() {
         String representation = "2+3*4";
+        char Product = '*';
+        char plus = '+';
         Expression expression = new Expression(representation);
         BinaryOperationFactory binaryOperationFactory = mock(BinaryOperationFactory.class);
-        Calculator calculator = new Calculator(binaryOperationFactory);
+        Calculator calculator = new Calculator(binaryOperationFactory, new OperatorPrecedenceFactory());
         Multiplication multiplication = mock(Multiplication.class);
         BinaryOperation addOperation = mock(Addition.class);
 
@@ -70,8 +73,8 @@ class CalculatorTest {
         when(multiplication.evaluate()).thenReturn(new Operand(12));
         calculator.evaluate(expression);
 
-        verify(binaryOperationFactory).getOperation(new Operator('*'), new Operand(3), new Operand(4));
-        verify(binaryOperationFactory).getOperation(new Operator('+'), new Operand(2), new Operand(12));
+        verify(binaryOperationFactory).getOperation(new Operator(Product), new Operand(3), new Operand(4));
+        verify(binaryOperationFactory).getOperation(new Operator(plus), new Operand(2), new Operand(12));
     }
 
     @Test
@@ -79,7 +82,7 @@ class CalculatorTest {
         String representation = "2+4*3";
         Expression expression = new Expression(representation);
         BinaryOperationFactory binaryOperationFactory = mock(BinaryOperationFactory.class);
-        Calculator calculator = new Calculator(binaryOperationFactory);
+        Calculator calculator = new Calculator(binaryOperationFactory, new OperatorPrecedenceFactory());
         BinaryOperation addOperation = mock(Addition.class);
 
         when(binaryOperationFactory.getOperation(any(Operator.class), any(Operand.class), any(Operand.class)))
@@ -89,5 +92,5 @@ class CalculatorTest {
 
         verify(addOperation, times(2)).evaluate();
     }
-
+    
 }

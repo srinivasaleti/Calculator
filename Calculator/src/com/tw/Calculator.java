@@ -8,9 +8,16 @@ import java.util.Stack;
 class Calculator {
 
     private final BinaryOperationFactory binaryOperationFactory;
+    private final OperatorPrecedenceFactory operatorPrecedenceFactory;
 
-    Calculator(BinaryOperationFactory binaryOperationFactory) {
+    private Stack<Operand> operandStack;
+    private Stack<Operator> operatorStack;
+
+    Calculator(BinaryOperationFactory binaryOperationFactory, OperatorPrecedenceFactory operatorPrecedenceFactory) {
         this.binaryOperationFactory = binaryOperationFactory;
+        this.operatorPrecedenceFactory = operatorPrecedenceFactory;
+        this.operandStack = new Stack<>();
+        this.operatorStack = new Stack<>();
     }
 
     int evaluate(Expression expression) {
@@ -20,8 +27,6 @@ class Calculator {
     }
 
     private int evaluateBasedOn(Iterator<Operand> operands, Iterator<Operator> operators) {
-        Stack<Operand> operandStack = new Stack<>();
-        Stack<Operator> operatorStack = new Stack<>();
         operandStack.push(operands.next());
         while (operands.hasNext()) {
             Operator currentOperator = operators.next();
