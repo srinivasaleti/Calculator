@@ -22,9 +22,35 @@ class Calculator {
     }
 
     int evaluate(Expression expression) {
+        if (!expression.hasParentheses()) {
+            return evaluateGivenExpression(expression);
+        }
+        return evaluateParenthesizedExpression(expression);
+    }
+
+    private int evaluateParenthesizedExpression(Expression expression) {
+        while (expression.hasParentheses()) {
+            Expression newExpression = formNewExpression(expression);
+            if (newExpression.hasParentheses()) {
+                return evaluate(newExpression);
+            }
+            return evaluateGivenExpression(newExpression);
+        }
+        return DEFAULT_EXPRESSION_VALUE;
+    }
+
+    private int evaluateGivenExpression(Expression expression) {
         List<Operand> operands = expression.operandList();
         List<Operator> operators = expression.operatorList();
         return evaluateBasedOn(operands.iterator(), operators.iterator());
+    }
+
+    private Expression formNewExpression(Expression expression) {
+        int innerExpressionValue = evaluate(new Expression(expression.innerMostSubExpressionRepresentation()));
+        String newExpressionRepresentation = expression.leftSubExpressionRepresentationUntilInnerMostOpenParentheses()
+                + innerExpressionValue
+                + expression.rightSubExpressionRepresentationFromInnerRightParentheses();
+        return new Expression(newExpressionRepresentation);
     }
 
     private int evaluateBasedOn(Iterator<Operand> operands, Iterator<Operator> operators) {

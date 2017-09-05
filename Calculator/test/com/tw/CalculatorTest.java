@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -22,11 +23,21 @@ class CalculatorTest {
 
     @Test
     void shouldReturnThree() {
-        String representation = "2*1+1";
+        String representation = "(2*1)+1";
         Expression expression = new Expression(representation);
         Calculator calculator = new Calculator(new BinaryOperationFactory(), new OperatorPrecedenceFactory());
 
         assertEquals(3, calculator.evaluate(expression));
+    }
+
+    @Test
+    void shouldReturnFive(){
+        String representation = "(2*(2+1))-1";
+        Expression expression = new Expression(representation);
+        Calculator calculator = new Calculator(new BinaryOperationFactory(), new OperatorPrecedenceFactory());
+
+        assertEquals(5, calculator.evaluate(expression));
+
     }
 
     @Test
@@ -164,6 +175,35 @@ class CalculatorTest {
         calculator.evaluate(expression);
 
         verify(addOperation, times(2)).evaluate();
+    }
+
+    @Test
+    void askExpressionToCheckItHasParenthesesOrNot() {
+        Expression expression = mock(Expression.class);
+        Calculator calculator = new Calculator(new BinaryOperationFactory(), new OperatorPrecedenceFactory());
+
+        when(expression.hasParentheses()).thenReturn(false);
+        calculator.evaluate(expression);
+
+        verify(expression).hasParentheses();
+    }
+
+    @Test
+    void askExpressionAboutItsInnerExpressions() {
+        Expression expression = mock(Expression.class);
+        Calculator calculator = new Calculator(new BinaryOperationFactory(), new OperatorPrecedenceFactory());
+
+        when(expression.hasParentheses()).thenReturn(true);
+        when(expression.leftSubExpressionRepresentationUntilInnerMostOpenParentheses()).thenReturn("1+");
+        when(expression.innerMostSubExpressionRepresentation()).thenReturn("2");
+        when(expression.rightSubExpressionRepresentationFromInnerRightParentheses()).thenReturn("-3");
+        calculator.evaluate(expression);
+
+        assertAll(()->{
+            verify(expression).leftSubExpressionRepresentationUntilInnerMostOpenParentheses();
+            verify(expression).innerMostSubExpressionRepresentation();
+            verify(expression).rightSubExpressionRepresentationFromInnerRightParentheses();
+        });
     }
 
 }

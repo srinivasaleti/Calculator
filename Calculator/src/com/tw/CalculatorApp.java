@@ -4,10 +4,11 @@ package com.tw;
 public class CalculatorApp {
 
     public static void main(String[] args) {
-        Expression expression = new Expression("2-4/2*3+5");
-        Calculator calculator = new Calculator(new BinaryOperationFactory());
-
-        System.out.println(calculator.evaluate(expression));
+        BinaryOperationFactory binaryOperationFactory = new BinaryOperationFactory();
+        OperatorPrecedenceFactory operatorPrecedenceFactory = new OperatorPrecedenceFactory();
+        Calculator calculator = new Calculator(binaryOperationFactory, operatorPrecedenceFactory);
+        Expression anotherExpression = new Expression("(1-(3*(2/2))+5+1)");
+        calculator.evaluate(anotherExpression);
+        System.out.println(calculator.evaluate(anotherExpression));
     }
-
 }
