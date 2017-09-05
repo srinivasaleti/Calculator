@@ -27,6 +27,9 @@ class Calculator {
     }
 
     private int evaluateBasedOn(Iterator<Operand> operands, Iterator<Operator> operators) {
+        if (!operands.hasNext()) {
+            return 0;
+        }
         operandStack.push(operands.next());
         while (operands.hasNext()) {
             Operator currentOperator = operators.next();
