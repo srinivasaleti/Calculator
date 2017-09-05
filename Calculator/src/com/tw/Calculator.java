@@ -7,11 +7,12 @@ import java.util.Stack;
 //Represents a tool for mathematical calculations
 class Calculator {
 
-    private final BinaryOperationFactory binaryOperationFactory;
-    private final OperatorPrecedenceFactory operatorPrecedenceFactory;
+    private static final int DEFAULT_EXPRESSION_VALUE = 0;
 
     private Stack<Operand> operandStack;
     private Stack<Operator> operatorStack;
+    private final BinaryOperationFactory binaryOperationFactory;
+    private final OperatorPrecedenceFactory operatorPrecedenceFactory;
 
     Calculator(BinaryOperationFactory binaryOperationFactory, OperatorPrecedenceFactory operatorPrecedenceFactory) {
         this.binaryOperationFactory = binaryOperationFactory;
