@@ -2,8 +2,7 @@ package com.tw;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ExpressionTest {
 
@@ -81,6 +80,20 @@ class ExpressionTest {
         Expression expression = new Expression("1+(3+(2+3)+4)+6");
 
         assertEquals("2+3", expression.innerMostSubExpressionRepresentation());
+    }
+
+    @Test
+    void expectedTrueWhenExpressionHasParentheses() {
+        Expression expression = new Expression("(2+3)");
+
+        assertTrue(expression.hasParentheses());
+    }
+
+    @Test
+    void expectedFalseWhenExpressionDoNotHaveParentheses() {
+        Expression expression = new Expression("2+3");
+
+        assertFalse(expression.hasParentheses());
     }
 
 }

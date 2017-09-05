@@ -67,6 +67,15 @@ class Expression {
                 innerMostClosedParenthesesIndex());
     }
 
+    boolean hasParentheses() {
+        for (Character character : this.representation.toCharArray()) {
+            if (character == OPEN_PARENTHESIS) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private int innerMostOpenParenthesesIndex() {
         int index = INITIAL_INDEX;
         int innerMostParenthesesIndex = INITIAL_INDEX;
