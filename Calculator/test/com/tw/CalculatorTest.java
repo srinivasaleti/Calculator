@@ -3,6 +3,8 @@ package com.tw;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -57,6 +59,77 @@ class CalculatorTest {
     }
 
     @Test
+    void askIteratorOnListOfOperandsOfExpressionToEvaluateIt() {
+        Expression expression = mock(Expression.class);
+        Calculator calculator = new Calculator(new BinaryOperationFactory(), new OperatorPrecedenceFactory());
+        List operands = mock(List.class);
+        Iterator operandIterator = mock(Iterator.class);
+        Operator aOperator = new Operator('+');
+
+        when(expression.operandList()).thenReturn(operands);
+        when(operands.iterator()).thenReturn(operandIterator);
+        when(operandIterator.hasNext()).thenReturn(false);
+        when(expression.operatorList()).thenReturn(Collections.singletonList(aOperator));
+        calculator.evaluate(expression);
+
+        verify(operands).iterator();
+    }
+
+    @Test
+    void askIteratorOnListOfOperatorsOfExpressionToEvaluateIt() {
+        Expression expression = mock(Expression.class);
+        Calculator calculator = new Calculator(new BinaryOperationFactory(), new OperatorPrecedenceFactory());
+        List operands = mock(List.class);
+        Iterator operandIterator = mock(Iterator.class);
+        List operators = mock(List.class);
+        Iterator operatorIterator = mock(Iterator.class);
+
+        when(expression.operandList()).thenReturn(operands);
+        when(operands.iterator()).thenReturn(operandIterator);
+        when(operandIterator.hasNext()).thenReturn(false);
+        when(expression.operatorList()).thenReturn(operators);
+        when(operators.iterator()).thenReturn(operatorIterator);
+        when(operatorIterator.hasNext()).thenReturn(false);
+        calculator.evaluate(expression);
+
+        verify(operands).iterator();
+    }
+
+    @Test
+    void askPrecedenceFactoryToGetPrecedenceOfTwoOperator() {
+        String representation = "2+3*4";
+        Expression expression = new Expression(representation);
+        BinaryOperationFactory binaryOperationFactory = new BinaryOperationFactory();
+        OperatorPrecedenceFactory operatorPrecedenceFactory = mock(OperatorPrecedenceFactory.class);
+        Calculator calculator = new Calculator(binaryOperationFactory, operatorPrecedenceFactory);
+
+        when(operatorPrecedenceFactory.getPrecedence(new Operator('+'))).thenReturn(new Precedence(1));
+        when(operatorPrecedenceFactory.getPrecedence(new Operator('*'))).thenReturn(new Precedence(2));
+        calculator.evaluate(expression);
+
+        verify(operatorPrecedenceFactory).getPrecedence(new Operator('+'));
+        verify(operatorPrecedenceFactory).getPrecedence(new Operator('*'));
+    }
+
+    @Test
+    void askPrecedenceToCompareWithOtherOperatorPrecedence() {
+        String representation = "2+3*4";
+        Expression expression = new Expression(representation);
+        BinaryOperationFactory binaryOperationFactory = new BinaryOperationFactory();
+        OperatorPrecedenceFactory operatorPrecedenceFactory = mock(OperatorPrecedenceFactory.class);
+        Calculator calculator = new Calculator(binaryOperationFactory, operatorPrecedenceFactory);
+        Precedence additivePrecedence = mock(Precedence.class);
+        Precedence multiplicativePrecedence = mock(Precedence.class);
+
+        when(operatorPrecedenceFactory.getPrecedence(new Operator('+'))).thenReturn(additivePrecedence);
+        when(operatorPrecedenceFactory.getPrecedence(new Operator('*'))).thenReturn(multiplicativePrecedence);
+        when(additivePrecedence.hasHigherThan(multiplicativePrecedence)).thenReturn(true);
+        calculator.evaluate(expression);
+
+        verify(additivePrecedence).hasHigherThan(multiplicativePrecedence);
+    }
+
+    @Test
     void askBinaryFactoryToGetOperation() {
         String representation = "2+3*4";
         char Product = '*';
@@ -92,5 +165,5 @@ class CalculatorTest {
 
         verify(addOperation, times(2)).evaluate();
     }
-    
+
 }
