@@ -13,6 +13,7 @@ class Expression {
     private static final char DIVISION = '/';
     private static final int INITIAL_INDEX = 0;
     private static final int OFFSET = 1;
+    private static final String OPEN_PARENTHESIS_STRING = "(";
 
     private final String representation;
     private final Set<Character> operatorSet;
@@ -68,12 +69,7 @@ class Expression {
     }
 
     boolean hasParentheses() {
-        for (Character character : this.representation.toCharArray()) {
-            if (character == OPEN_PARENTHESIS) {
-                return true;
-            }
-        }
-        return false;
+        return this.representation.contains(OPEN_PARENTHESIS_STRING);
     }
 
     private int innerMostOpenParenthesesIndex() {
