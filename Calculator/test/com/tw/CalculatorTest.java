@@ -31,7 +31,7 @@ class CalculatorTest {
     }
 
     @Test
-    void shouldReturnFive(){
+    void shouldReturnFive() {
         String representation = "(2*(2+1))-1";
         Expression expression = new Expression(representation);
         Calculator calculator = new Calculator(new BinaryOperationFactory(), new OperatorPrecedenceFactory());
@@ -199,7 +199,7 @@ class CalculatorTest {
         when(expression.rightSubExpressionRepresentationFromInnerRightParentheses()).thenReturn("-3");
         calculator.evaluate(expression);
 
-        assertAll(()->{
+        assertAll(() -> {
             verify(expression).leftSubExpressionRepresentationUntilInnerMostOpenParentheses();
             verify(expression).innerMostSubExpressionRepresentation();
             verify(expression).rightSubExpressionRepresentationFromInnerRightParentheses();
