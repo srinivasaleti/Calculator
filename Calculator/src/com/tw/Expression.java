@@ -5,10 +5,13 @@ import java.util.*;
 //Represents an arithmetic expression
 class Expression {
 
+    private static final char OPEN_PARENTHESIS = '(';
     private static final char PLUS = '+';
     private static final char MINUS = '-';
     private static final char PRODUCT = '*';
     private static final char DIVISION = '/';
+    private static final int INITIAL_INDEX = 0;
+    private static final int OFFSET = 1;
 
     private final String representation;
     private final Set<Character> operatorSet;
@@ -48,6 +51,23 @@ class Expression {
         int powerTimesOfNumber = previousNumber * power;
         int valueOfDigit = Integer.parseInt(digit.toString());
         return powerTimesOfNumber + valueOfDigit;
+    }
+
+    String leftSubExpressionUntilInnerParentheses() {
+        int innerMostParenthesesIndex = innerOpenParenthesesIndex();
+        return this.representation.substring(INITIAL_INDEX, innerMostParenthesesIndex);
+    }
+
+    private int innerOpenParenthesesIndex() {
+        int index = INITIAL_INDEX;
+        int innerMostParenthesesIndex = INITIAL_INDEX;
+        while (index < this.representation.length()) {
+            if (this.representation.charAt(index) == OPEN_PARENTHESIS) {
+                innerMostParenthesesIndex = index;
+            }
+            index += OFFSET;
+        }
+        return innerMostParenthesesIndex;
     }
 
 }

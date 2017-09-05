@@ -3,6 +3,8 @@ package com.tw;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ExpressionTest {
 
@@ -38,6 +40,20 @@ class ExpressionTest {
         Operator[] operators = {new Operator('+'), new Operator('-')};
 
         assertArrayEquals(operators, expression.operatorList().toArray());
+    }
+
+    @Test
+    void expectedLeftExpressionRepresentationUntilInnerParentheses(){
+        Expression expression = new Expression("1+(3+4)+6");
+
+        assertEquals("1+",expression.leftSubExpressionUntilInnerParentheses());
+    }
+
+    @Test
+    void expectedLeftExpressionRepresentationUntilInnerParenthesesOfAnotherExpression() {
+        Expression expression = new Expression("1+(2+(3+4)+5)+6");
+
+        assertEquals("1+(2+",expression.leftSubExpressionUntilInnerParentheses());
     }
 
 }
