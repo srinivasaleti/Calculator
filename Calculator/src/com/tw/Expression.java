@@ -62,6 +62,11 @@ class Expression {
         return this.representation.substring(innerMostClosedParenthesesIndex() + OFFSET);
     }
 
+    String innerMostSubExpressionRepresentation() {
+        return this.representation.substring(innerMostOpenParenthesesIndex() + OFFSET,
+                innerMostClosedParenthesesIndex());
+    }
+
     private int innerMostOpenParenthesesIndex() {
         int index = INITIAL_INDEX;
         int innerMostParenthesesIndex = INITIAL_INDEX;

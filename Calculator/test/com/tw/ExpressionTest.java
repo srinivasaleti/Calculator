@@ -69,4 +69,18 @@ class ExpressionTest {
         assertEquals("+5)+6", expression.rightSubExpressionRepresentationFromInnerRightParentheses());
     }
 
+    @Test
+    void expectedInnerMostSubExpressionRepresentation() {
+        Expression expression = new Expression("1+(3+4)+6");
+
+        assertEquals("3+4", expression.innerMostSubExpressionRepresentation());
+    }
+
+    @Test
+    void expectedInnerMostSubExpressionRepresentationOfAnotherExpression() {
+        Expression expression = new Expression("1+(3+(2+3)+4)+6");
+
+        assertEquals("2+3", expression.innerMostSubExpressionRepresentation());
+    }
+
 }
