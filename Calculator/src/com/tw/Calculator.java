@@ -33,7 +33,7 @@ class Calculator {
         operandStack.push(operands.next());
         while (operands.hasNext()) {
             Operator currentOperator = operators.next();
-            while (canPerformOperation(currentOperator)) {
+            while (isStackOperatorHasHigherPrecedenceThanCurrentOperator(currentOperator)) {
                 doArithmeticOperation();
             }
             operandStack.push(operands.next());
@@ -45,7 +45,7 @@ class Calculator {
         return operandStack.peek().value();
     }
 
-    private boolean canPerformOperation(Operator currentOperator) {
+    private boolean isStackOperatorHasHigherPrecedenceThanCurrentOperator(Operator currentOperator) {
         if (operatorStack.empty()) {
             return false;
         }
