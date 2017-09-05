@@ -43,7 +43,13 @@ class Calculator {
     }
 
     private boolean canPerformOperation(Stack<Operator> operatorStack, Operator currentOperator) {
-        return !operatorStack.empty() && hasPrecedence(currentOperator.symbol(), operatorStack.peek().symbol());
+        if (operatorStack.empty()) {
+            return false;
+        }
+        Operator stackTopOperator = operatorStack.peek();
+        Precedence stackTopOperatorPrecedence = this.operatorPrecedenceFactory.getPrecedence(stackTopOperator);
+        Precedence currentOperatorPrecedence = this.operatorPrecedenceFactory.getPrecedence(currentOperator);
+        return stackTopOperatorPrecedence.hasHigherThan(currentOperatorPrecedence);
     }
 
     private void doArithmeticOperation(Stack<Operand> operandStack, Stack<Operator> operatorStack) {
@@ -51,13 +57,6 @@ class Calculator {
         Operand secondOperand = operandStack.pop();
         BinaryOperation operation = binaryOperationFactory.getOperation(operatorStack.pop(), secondOperand, firstOperand);
         operandStack.push(operation.evaluate());
-    }
-
-    private boolean hasPrecedence(char op1, char op2) {
-        if ((op1 == '*' || op1 == '/') && (op2 == '+' || op2 == '-'))
-            return false;
-        else
-            return true;
     }
 
 }
