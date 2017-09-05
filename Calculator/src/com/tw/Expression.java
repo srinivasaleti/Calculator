@@ -54,15 +54,15 @@ class Expression {
         return powerTimesOfNumber + valueOfDigit;
     }
 
-    String leftSubExpressionUntilInnerParentheses() {
-        return this.representation.substring(INITIAL_INDEX, innerOpenParenthesesIndex());
+    String leftSubExpressionRepresentationUntilInnerMostOpenParentheses() {
+        return this.representation.substring(INITIAL_INDEX, innerMostOpenParenthesesIndex());
     }
 
     String rightSubExpressionRepresentationFromInnerRightParentheses() {
         return this.representation.substring(innerMostClosedParenthesesIndex() + OFFSET);
     }
 
-    private int innerOpenParenthesesIndex() {
+    private int innerMostOpenParenthesesIndex() {
         int index = INITIAL_INDEX;
         int innerMostParenthesesIndex = INITIAL_INDEX;
         while (index < this.representation.length()) {
