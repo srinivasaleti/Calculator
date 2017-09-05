@@ -29,7 +29,7 @@ class Calculator {
 
     private int evaluateBasedOn(Iterator<Operand> operands, Iterator<Operator> operators) {
         if (!operands.hasNext()) {
-            return 0;
+            return DEFAULT_EXPRESSION_VALUE;
         }
         evaluateUsingStacksBasedOn(operands, operators);
         return operandStack.peek().value();
