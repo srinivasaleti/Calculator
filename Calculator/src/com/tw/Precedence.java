@@ -24,4 +24,12 @@ class Precedence {
         return this.value == that.value;
     }
 
+    boolean hasHigherThan(Precedence precedence) {
+        return this.value >= precedence.value();
+    }
+
+    int value() {
+        return this.value;
+    }
+
 }
